@@ -54,7 +54,3 @@ and adjust the `jq` filters in `feeder.sh` to match its JSON shape.
 - `docker-compose.yml` — wires `feeder` and `web` together, sharing
   `./data/www` so feeder's output becomes nginx's content.
 
-## Group members
-- <name 1>
-- <name 2>
-- <name 3>
