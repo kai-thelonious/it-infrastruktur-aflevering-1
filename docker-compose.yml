@@ -3,13 +3,16 @@ services:
     image: nginx:alpine
     ports:
       - "8080:80"
+    volumes:
+      - ./data/www:/usr/share/nginx/html:ro   # read-only: nginx only ever reads what feeder writes
 
-  checker:
+  feeder:
     build: .
     environment:
-      TARGET_URL: "http://web/"      # reach the "web" service by its Compose service name
-      CHECK_INTERVAL: "5"
+      API_URL: "https://api.frankfurter.app/latest?from=USD&to=DKK"
+      WEB_CHECK_URL: "http://web/"            # reach nginx by its Compose service name
+      FEED_INTERVAL: "30"
     depends_on:
       - web
     volumes:
-      - ./data:/data                 # log file survives container restarts
+      - ./data:/data                          # writable: feeder writes html + its own log here
