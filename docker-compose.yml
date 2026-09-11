@@ -1,0 +1,15 @@
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+
+  checker:
+    build: .
+    environment:
+      TARGET_URL: "http://web/"      # reach the "web" service by its Compose service name
+      CHECK_INTERVAL: "5"
+    depends_on:
+      - web
+    volumes:
+      - ./data:/data                 # log file survives container restarts
